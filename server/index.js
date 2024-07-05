@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
-import router from './router'
+import router from './router/index.js'
 
 const PORT = process.env.PORT || 5000
 const app = express()
