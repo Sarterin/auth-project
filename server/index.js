@@ -20,7 +20,7 @@ const start = async () => {
         await mongoose.connect(process.env.DB_URL)
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     } catch (e) {
-        console.log(e)
+        console.error(e)
     }
 }
 
