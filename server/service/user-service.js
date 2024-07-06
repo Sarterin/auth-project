@@ -15,7 +15,7 @@ class UserService {
         const activationLink = v4()
 
         const user = await UserModel.create({email, password: hashedPassword, activationLink})
-        await mailService.sendActivationMail(email, activationLink)
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
 
         const userDto = new UserDto(user)
         const tokens = tokenService.generateTokens({...userDto})
@@ -23,8 +23,17 @@ class UserService {
 
         return {
             ...tokens,
-            user: UserDto
+            user: userDto
         }
+    }
+
+    async activate(activationLink) {
+        const user = await UserModel.findOne({activationLink})
+        if(!user) {
+            throw new Error('Некорректная ссылка активации')
+        }
+        user.isActivated = true
+        await user.save()
     }
 }
 
