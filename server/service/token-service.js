@@ -16,7 +16,7 @@ class TokenService {
     //  При этом не забыть очищать устаревшие токены.
     async saveToken(userId, refreshToken) {
         const tokenData = await TokenModel.findOne({user: userId})
-        if (tokenData) {
+        if(tokenData) {
             tokenData.refreshToken = refreshToken
             return tokenData.save()
         }
